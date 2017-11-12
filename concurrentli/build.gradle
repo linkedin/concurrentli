@@ -1,0 +1,20 @@
+apply plugin: 'idea'
+apply plugin: 'java-library'
+
+repositories {
+    mavenCentral()
+}
+
+group = 'com.concurrentli'
+version = '1.0.0'
+
+dependencies {
+    testCompile "junit:junit:4.12"
+}
+
+jar {
+    manifest {
+        attributes('Copyright': 'Copyright 2017 LinkedIn Corporation. All rights reserved.',
+            'License': 'Licensed under the BSD-2 Clause license.  See LICENSE in the project root for license information.')
+    }
+}
