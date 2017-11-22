@@ -1,3 +1,5 @@
+rootProject.name = 'concurrentli'
+
 def modules = ['concurrentli'] /* the name of the modules to use */
 
 modules.each { module ->

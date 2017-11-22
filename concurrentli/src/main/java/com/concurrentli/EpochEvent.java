@@ -21,6 +21,8 @@ public interface EpochEvent {
    *
    * If multiple calls to set(...) are made in parallel, the effect is the same as if only the highest-epoch-value call
    * had been made.
+   *
+   * @param epoch the epoch to set
    */
   void set(long epoch);
 
@@ -28,6 +30,8 @@ public interface EpochEvent {
    * If the epoch is less than or equal to the requested epoch, returns immediately.
    *
    * Otherwise, blocks until this epoch occurs.
+   *
+   * @param epoch the epoch to wait for
    *
    * @throws InterruptedException if the thread is interrupted while waiting
    */

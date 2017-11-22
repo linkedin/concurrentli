@@ -32,8 +32,8 @@ public class SemaphoreMap<K> {
   /**
    * Acquires the semaphore for a given key.
    *
-   * @param key
-   * @throws InterruptedException
+   * @param key the key whose semaphore will be acquired
+   * @throws InterruptedException if interrupted while waiting to acquire the semaphore
    */
   public void acquire(K key) throws InterruptedException {
     QualifiedSemaphore waitObj = _semaphoreMap.compute(key, (t, v) -> {
@@ -60,7 +60,7 @@ public class SemaphoreMap<K> {
   /**
    * Releases one permit for the given key.
    *
-   * @param key
+   * @param key the key to release a permit for
    */
   public void release(K key) {
     _semaphoreMap.compute(key, (t, s) -> {

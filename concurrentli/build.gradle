@@ -1,12 +1,14 @@
 apply plugin: 'idea'
 apply plugin: 'java-library'
 
+apply plugin: 'maven'
+apply plugin: 'signing'
+
+archivesBaseName = "concurrentli"
+
 repositories {
     mavenCentral()
 }
-
-group = 'com.concurrentli'
-version = '1.0.0'
 
 dependencies {
     testCompile "junit:junit:4.12"
@@ -17,4 +19,67 @@ jar {
         attributes('Copyright': 'Copyright 2017 LinkedIn Corporation. All rights reserved.',
             'License': 'Licensed under the BSD-2 Clause license.  See LICENSE in the project root for license information.')
     }
+}
+
+task javadocJar(type: Jar) {
+  classifier = 'javadoc'
+  from javadoc
+}
+
+task sourcesJar(type: Jar) {
+  classifier = 'sources'
+  from sourceSets.main.allSource
+}
+
+artifacts {
+  archives javadocJar, sourcesJar
+}
+
+signing {
+  sign configurations.archives
+}
+
+uploadArchives {
+  repositories {
+    mavenDeployer {
+      beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+      repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+        authentication(userName: ossrhUsername, password: ossrhPassword)
+      }
+
+      snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+        authentication(userName: ossrhUsername, password: ossrhPassword)
+      }
+
+      pom.project {
+        name 'Concurrentli'
+        packaging 'jar'
+
+        description 'Classes for multithreading that expand on java.util.concurrent, adding convenience, efficiency ' +
+            'and new tools to multithreaded Java programs'
+        url 'https://github.com/linkedin/concurrentli'
+
+        scm {
+          connection 'scm:git@github.com:linkedin/concurrentli.git'
+          developerConnection 'scm:git@github.com:linkedin/concurrentli.git'
+          url 'scm:git@github.com:linkedin/concurrentli.git'
+        }
+
+        licenses {
+          license {
+            name 'BSD 2-Clause License'
+            url 'https://opensource.org/licenses/BSD-2-Clause'
+          }
+        }
+
+        developers {
+          developer {
+            id 'jeffpasternack'
+            name 'Jeff Pasternack'
+          }
+        }
+      }
+    }
+  }
 }

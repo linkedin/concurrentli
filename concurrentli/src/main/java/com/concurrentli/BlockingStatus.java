@@ -37,7 +37,7 @@ public enum BlockingStatus {
 
   /**
    * Given zero or more statuses, determines the "maximum" blocking status, that is, the one that is most
-   * severe, according to the ordering NOT_BLOCKING < TEMPORARILY_BLOCKING < ALWAYS_BLOCKING.
+   * severe, according to the ordering {@literal NOT_BLOCKING < TEMPORARILY_BLOCKING < ALWAYS_BLOCKING}.
    *
    * @param statii the statuses whose maximum will be found
    * @return the "maximum" blocking status

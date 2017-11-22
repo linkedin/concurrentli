@@ -23,7 +23,8 @@ import java.util.function.Supplier;
  * This class is "unsafe" because it is partly dependent upon the caller to ensure correct behavior.  Asserts are used
  * to check against out-of-bounds access, but when asserts are disabled there are no such checks.  Additionally, it is
  * not safe to advance a {@link UnsafeCircularReferenceBuffer} while simultaneously accessing its entries, unless it is
- * otherwise externally ensured that, while advancing from index i -> i + 1, no access to element i or i + 1 occurs.
+ * otherwise externally ensured that, while advancing from index i {@literal ->} i + 1, no access to element i or i + 1
+ * occurs.
  *
  * Unlike a SequentialQueue, unsafe circular buffers offer random access to a particular horizon from the current
  * starting offset, never block, and require more care to use safely.
@@ -109,6 +110,8 @@ public class UnsafeCircularReferenceBuffer<T> implements Serializable {
    *
    * @param index the index of the element to set
    * @param value the element to set
+   *
+   * @return the previous value for the specified element
    */
   public T getAndSet(long index, T value) {
     assert isValid(index);
@@ -124,6 +127,8 @@ public class UnsafeCircularReferenceBuffer<T> implements Serializable {
    * @param expected what the current value is expected to be; the update will not take place if it is
    *                 not the same object (reference-wise, not equals()).
    * @param update the element to set
+   *
+   * @return true if the value was set successfully, false otherwise
    */
   public boolean compareAndSet(long index, T expected, T update) {
     assert isValid(index);

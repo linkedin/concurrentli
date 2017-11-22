@@ -132,6 +132,8 @@ public class SequentialQueue<T> {
    *
    * @param index the index of the item that, when dequeued, will result in an exception
    * @param exception the exception that will be thrown
+   *
+   * @throws InterruptedException if the enqueing operation is interrupted
    */
   public void enqueueException(long index, RuntimeException exception) throws InterruptedException {
     enqueue(index, null, exception);
@@ -149,7 +151,7 @@ public class SequentialQueue<T> {
    * @param index the non-negative index of the item being enqueued
    * @param obj the object to be enqueued; may be null
    * @throws InterruptedException if interrupted while waiting for capacity to become available
-   * @throws IllegalArgumentException if the index is < 0, or is an object that has already been dequeued
+   * @throws IllegalArgumentException if the index is {@literal < 0}, or is an object that has already been dequeued
    */
   public void enqueue(long index, T obj) throws InterruptedException {
     enqueue(index, obj, null);

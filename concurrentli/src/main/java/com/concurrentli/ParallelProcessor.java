@@ -116,8 +116,8 @@ public abstract class ParallelProcessor<T, R> implements AutoCloseable, BatchIte
      * Sets the number of threads that will be used to process inputs.  The default is the number of logical processors
      * available to the JVM (usually the number on the physical machine).
      *
-     * @param processorThreads
-     * @return
+     * @param processorThreads the number of threads that will be used
+     * @return this instance
      */
     public Config setProcessorThreads(int processorThreads) {
       this._processorThreads = processorThreads;
@@ -319,6 +319,7 @@ public abstract class ParallelProcessor<T, R> implements AutoCloseable, BatchIte
    * @return the next InputOutput pair, or null if there are no more results.
    * @throws NextInputException if an asynchronous exception occurred in nextInput()
    * @throws ProcessInputException if an asynchronous exception occurred in processInput(...)
+   * @throws InterruptedException if the operation is interrupted
    */
   public R nextInterruptable() throws InterruptedException {
     if (!ensureBuffer()) {

@@ -22,7 +22,8 @@ import java.util.concurrent.atomic.AtomicLongArray;
  * This class is "unsafe" because it is partly dependent upon the caller to ensure correct behavior.  Asserts are used
  * to check against out-of-bounds access, but when asserts are disabled there are no such checks.  Additionally, it is
  * not safe to advance a {@link UnsafeCircularIntegerBuffer} while simultaneously accessing its entries, unless it is
- * otherwise externally ensured that, while advancing from index i -> i + 1, no access to element i or i + 1 occurs.
+ * otherwise externally ensured that, while advancing from index i {@literal ->} i + 1, no access to element i or i + 1
+ * occurs.
  *
  * Unlike a SequentialQueue, unsafe circular buffers offer random access to a particular horizon from the current
  * starting offset, never block, and require more care to use safely.
