@@ -69,8 +69,8 @@ public abstract class Singleton<T> implements Supplier<T>, Serializable {
   }
 
   private static final class FinalWrapper<T> {
-    public final T value;
-    public FinalWrapper(T value) {
+    final T value;
+    FinalWrapper(T value) {
       this.value = value;
     }
   }

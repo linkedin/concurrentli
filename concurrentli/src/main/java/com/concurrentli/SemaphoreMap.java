@@ -20,9 +20,9 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class SemaphoreMap<K> {
   private static class QualifiedSemaphore extends Semaphore {
-    public AtomicInteger pending = new AtomicInteger(0);
+    AtomicInteger pending = new AtomicInteger(0);
 
-    public QualifiedSemaphore(int permits) {
+    QualifiedSemaphore(int permits) {
       super(permits);
     }
   }

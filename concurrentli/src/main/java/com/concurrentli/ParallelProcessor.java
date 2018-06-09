@@ -378,13 +378,13 @@ public abstract class ParallelProcessor<T, R> implements AutoCloseable, BatchIte
       throw new UncheckedInterruptedException(e);
     }
 
-    count = Math.min(count, _currentResult._length - _currentResultIndex);
-    System.arraycopy(_currentResult._data, _currentResultIndex, destination, offset, count);
-    Arrays.fill(_currentResult._data, _currentResultIndex, _currentResultIndex + count, null);
+    int toCopy = Math.min(count, _currentResult._length - _currentResultIndex);
+    System.arraycopy(_currentResult._data, _currentResultIndex, destination, offset, toCopy);
+    Arrays.fill(_currentResult._data, _currentResultIndex, _currentResultIndex + toCopy, null);
 
-    _currentResultIndex += count;
+    _currentResultIndex += toCopy;
 
-    return count;
+    return toCopy;
   }
 
   /**

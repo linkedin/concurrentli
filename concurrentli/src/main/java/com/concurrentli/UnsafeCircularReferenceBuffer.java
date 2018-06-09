@@ -39,7 +39,7 @@ public class UnsafeCircularReferenceBuffer<T> implements Serializable {
   private static class ConstantSupplier<T> implements Supplier<T>, Serializable {
     private final T _obj;
 
-    public ConstantSupplier(T obj) {
+    ConstantSupplier(T obj) {
       _obj = obj;
     }
 

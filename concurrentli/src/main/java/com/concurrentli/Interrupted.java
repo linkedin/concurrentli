@@ -8,7 +8,7 @@ package com.concurrentli;
 /**
  * Utility methods for creating unchecked Runnables from lambdas throwing InterruptedException
  */
-public class Interrupted {
+public final class Interrupted {
   @FunctionalInterface
   public interface InterruptableRunnable<T, R> {
     void run() throws InterruptedException;

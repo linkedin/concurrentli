@@ -1,0 +1,70 @@
+package com.concurrentli;
+
+import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.RejectedExecutionException;
+import java.util.concurrent.TimeUnit;
+import org.junit.Assert;
+import org.junit.Test;
+
+
+public class VirtualExecutorServiceTest {
+  @Test
+  public void basicTest() throws InterruptedException, ExecutionException {
+    ExecutorService baseExecutor = Executors.newFixedThreadPool(4);
+    VirtualExecutorService virtualExecutor = new VirtualExecutorService(baseExecutor);
+
+    Future<?> future = virtualExecutor.submit(Interrupted.unchecked(() -> {
+      while (true) {
+        Thread.sleep(0);
+      }
+    }));
+
+    future.cancel(true);
+
+    Future<Integer> future5 = virtualExecutor.submit(() -> 5);
+    Future<Integer> future8 = virtualExecutor.submit(() -> 8);
+
+    Assert.assertEquals((int) future5.get(), 5);
+    Assert.assertEquals((int) future8.get(), 8);
+
+    Assert.assertFalse(virtualExecutor.isTerminated());
+    virtualExecutor.shutdown();
+    virtualExecutor.awaitTermination(10, TimeUnit.SECONDS);
+    Assert.assertTrue(virtualExecutor.isTerminated());
+    Assert.assertFalse(baseExecutor.isTerminated());
+  }
+
+  @Test
+  public void shutdownNowTest() throws InterruptedException, ExecutionException {
+    ExecutorService baseExecutor = Executors.newFixedThreadPool(4);
+    VirtualExecutorService virtualExecutor = new VirtualExecutorService(baseExecutor);
+
+    for (int i = 0; i < 10; i++) {
+      virtualExecutor.submit(Interrupted.unchecked(() -> {
+        while (true) {
+          Thread.sleep(0);
+        }
+      }));
+    }
+
+    List<Runnable> list = virtualExecutor.shutdownNow();
+    Assert.assertEquals(6, list.size());
+    virtualExecutor.awaitTermination(10, TimeUnit.SECONDS);
+    Assert.assertTrue(virtualExecutor.isTerminated());
+    Assert.assertFalse(baseExecutor.isTerminated());
+
+    try {
+      virtualExecutor.submit(() -> 5);
+      Assert.fail();
+    } catch (RejectedExecutionException e) {
+    } catch (Exception e) {
+      Assert.fail();
+    }
+
+    Assert.assertEquals((int) (baseExecutor.submit(() -> 8).get()), 8);
+  }
+}

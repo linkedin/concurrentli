@@ -35,19 +35,19 @@ public class UnsafeCircularIntegerBuffer implements Serializable {
   private final AtomicLong _firstElementIndex = new AtomicLong(0);
   private final int _initialValue;
 
-  private static final long getElement(long index, int value) {
+  private static long getElement(long index, int value) {
     return (index << 32) | value;
   }
 
-  private static final int getIndex32(long element) {
+  private static int getIndex32(long element) {
     return (int) (element >>> 32);
   }
 
-  private static final int getValue(long element) {
+  private static int getValue(long element) {
     return (int) element;
   }
 
-  private final int getDataIndex(long index) {
+  private int getDataIndex(long index) {
     return (int) (index % _data.length());
   }
 
@@ -160,7 +160,7 @@ public class UnsafeCircularIntegerBuffer implements Serializable {
     return _data.length();
   }
 
-  private final boolean resetIfOutdated(long elementIndex) {
+  private boolean resetIfOutdated(long elementIndex) {
     assert elementIndex >= 0;
 
     long val;
