@@ -71,4 +71,26 @@ public class ParallelProcessorTest {
       assertEquals(i, (int) res);
     }
   }
+
+  @Test
+  public void skipTest() throws InterruptedException {
+    DummyProcessor dp = new DummyProcessor(false);
+
+    for (int i = 0; i < 10000; i += 5) {
+      Integer res = dp.nextInterruptable();
+      assertEquals(i, (int) res);
+      dp.skip(4);
+    }
+  }
+
+  @Test
+  public void skipTest2() throws InterruptedException {
+    DummyProcessor dp = new DummyProcessor(false);
+
+    for (int i = 0; i < 10000; i += 5000) {
+      Integer res = dp.nextInterruptable();
+      assertEquals(i, (int) res);
+      dp.skip(4999);
+    }
+  }
 }

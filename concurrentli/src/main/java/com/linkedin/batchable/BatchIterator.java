@@ -17,7 +17,7 @@ public interface BatchIterator<T> extends Iterator<T>, AutoCloseable {
   @Override
   boolean hasNext();
 
-  /**
+  /*
    * Reference, but inefficient implementation for next() if you choose to implement the
    * next(T[], int, int) method below:
    *
@@ -68,6 +68,38 @@ public interface BatchIterator<T> extends Iterator<T>, AutoCloseable {
    */
   default int next(T[] destination) {
     return next(destination, 0, destination.length);
+  }
+
+  /**
+   * Skips the next element.
+   *
+   * @return true if an item was skipped, false if the iterator was already at its end (hasNext() == false).
+   */
+  default boolean skip() {
+    return skip(1) > 0;
+  }
+
+  /**
+   * Skips the given number of elements.
+   *
+   * If the requested number of elements exceeds the number remaining, skips to the end of the iterator (such that
+   * hasNext() == false).
+   *
+   * Skipping elements may be faster than reading them with next().  The default implementation simply calls next()
+   * repeatedly.
+   *
+   * @param toSkip the number of elements to skip
+   * @return the number of elements skipped; if fewer than toSkip items remain in the iterator, the number of items
+   *         remaining in the iterator is returned.
+   */
+  default long skip(long toSkip) {
+    for (long i = 0; i < toSkip; i++) {
+      if (!hasNext()) {
+        return i;
+      }
+      next();
+    }
+    return toSkip;
   }
 
   /**

@@ -46,10 +46,12 @@ public class VirtualExecutorServiceTest {
     for (int i = 0; i < 10; i++) {
       virtualExecutor.submit(Interrupted.unchecked(() -> {
         while (true) {
-          Thread.sleep(0);
+          Thread.sleep(Long.MAX_VALUE);
         }
       }));
     }
+
+    Thread.sleep(100); // wait a while for the jobs to start
 
     List<Runnable> list = virtualExecutor.shutdownNow();
     Assert.assertEquals(6, list.size());
@@ -66,5 +68,47 @@ public class VirtualExecutorServiceTest {
     }
 
     Assert.assertEquals((int) (baseExecutor.submit(() -> 8).get()), 8);
+  }
+
+  // same as above, but doesn't wait after scheduling and merely checks that there are at least 6 (not exactly 6)
+  // un-run items remaining when shutdownNow() is called
+  @Test
+  public void shutdownNowTestWeak() throws InterruptedException, ExecutionException {
+    ExecutorService baseExecutor = Executors.newFixedThreadPool(4);
+    VirtualExecutorService virtualExecutor = new VirtualExecutorService(baseExecutor);
+
+    for (int i = 0; i < 10; i++) {
+      virtualExecutor.submit(Interrupted.unchecked(() -> {
+        while (true) {
+          Thread.sleep(Long.MAX_VALUE);
+        }
+      }));
+    }
+
+    List<Runnable> list = virtualExecutor.shutdownNow();
+    Assert.assertTrue(list.size() >= 6);
+    virtualExecutor.awaitTermination(10, TimeUnit.SECONDS);
+    Assert.assertTrue(virtualExecutor.isTerminated());
+    Assert.assertFalse(baseExecutor.isTerminated());
+  }
+
+  // Test if we can simply wait a second for the executor to shut down rather than using awaitShutdown
+  @Test
+  public void shutdownNowTimeAwaitTest() throws InterruptedException, ExecutionException {
+    ExecutorService baseExecutor = Executors.newFixedThreadPool(4);
+    VirtualExecutorService virtualExecutor = new VirtualExecutorService(baseExecutor);
+
+    for (int i = 0; i < 10; i++) {
+      virtualExecutor.submit(Interrupted.unchecked(() -> {
+        while (true) {
+          Thread.sleep(Long.MAX_VALUE);
+        }
+      }));
+    }
+
+    virtualExecutor.shutdownNow();
+    Thread.sleep(1000);
+    Assert.assertTrue(virtualExecutor.isTerminated());
+    Assert.assertFalse(baseExecutor.isTerminated());
   }
 }

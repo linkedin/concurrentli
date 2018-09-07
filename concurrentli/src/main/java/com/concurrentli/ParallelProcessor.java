@@ -387,6 +387,30 @@ public abstract class ParallelProcessor<T, R> implements AutoCloseable, BatchIte
     return toCopy;
   }
 
+  @Override
+  public long skip(long count) {
+    long skipped = 0;
+    while (skipped < count) {
+      try {
+        if (!ensureBuffer()) {
+          return skipped; // end of results
+        }
+      } catch (InterruptedException e) {
+        Thread.currentThread().interrupt();
+        throw new UncheckedInterruptedException(e);
+      }
+
+      int toSkip = (int) Math.min(count - skipped, _currentResult._length - _currentResultIndex);
+      Arrays.fill(_currentResult._data, _currentResultIndex, _currentResultIndex + toSkip, null);
+
+      _currentResultIndex += toSkip;
+      skipped += toSkip;
+    }
+
+    assert skipped == count;
+    return skipped;
+  }
+
   /**
    * Checks the {@link BlockingStatus} of this instance.
    *
