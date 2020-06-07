@@ -20,6 +20,8 @@ package com.concurrentli;
  * block into a {@link SequentialQueue} while another thread wrote them to an underlying stream in their proper order.
  *
  * @param <T> the type of item stored in this queue
+ *
+ * @author Jeff Pasternack
  */
 public class SequentialQueue<T> {
   private volatile long _nextIndex = 0;

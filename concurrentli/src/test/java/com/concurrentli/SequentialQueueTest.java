@@ -5,8 +5,6 @@
 
 package com.concurrentli;
 
-import com.concurrentli.Interrupted;
-import com.concurrentli.SequentialQueue;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;

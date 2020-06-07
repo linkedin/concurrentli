@@ -5,7 +5,6 @@
 
 package com.concurrentli;
 
-import com.concurrentli.SemaphoreMap;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

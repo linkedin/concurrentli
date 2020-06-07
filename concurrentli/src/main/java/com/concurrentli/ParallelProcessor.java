@@ -15,6 +15,8 @@ import java.util.concurrent.ArrayBlockingQueue;
  * tasks, and multiple processors that run the tasks.  The results are then placed into a SequentialQueue for access
  * in the order they were read.  For efficiency, tasks may be optionally batched, reducing lock contention on the queues
  * and reducing thread thrashing (since a thread may work on many tasks before having to access a guarded resource).
+ *
+ * @author Jeff Pasternack
  */
 public abstract class ParallelProcessor<T, R> implements AutoCloseable, BatchIterator<R> {
   /**

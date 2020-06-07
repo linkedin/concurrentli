@@ -5,9 +5,6 @@
 
 package com.concurrentli;
 
-import com.concurrentli.FutureEpochEvent;
-import com.concurrentli.ImminentEpochEvent;
-import com.concurrentli.Interrupted;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;

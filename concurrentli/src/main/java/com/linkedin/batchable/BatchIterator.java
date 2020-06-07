@@ -12,6 +12,8 @@ import java.util.Iterator;
  * rather than getting them one at a time.
  *
  * @param <T> the type of object iterated over
+ *
+ * @author Jeff Pasternack
  */
 public interface BatchIterator<T> extends Iterator<T>, AutoCloseable {
   @Override

@@ -5,7 +5,6 @@
 
 package com.concurrentli;
 
-import com.concurrentli.UnsafeCircularIntegerBuffer;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

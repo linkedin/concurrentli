@@ -33,6 +33,8 @@ import java.util.concurrent.atomic.AtomicInteger;
  * behavior (calling consumeSequentialElement on elements in sequentially increasing order of index) is guaranteed.
  * However, calling the method directly would result in incorrect behavior, since multiple threads could be executing
  * the loop at once.
+ *
+ * @author Jeff Pasternack
  */
 public class ExclusiveIdempotentMethod {
   private final AtomicInteger _pending = new AtomicInteger(0);

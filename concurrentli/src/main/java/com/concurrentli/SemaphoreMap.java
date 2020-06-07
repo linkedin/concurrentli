@@ -17,6 +17,8 @@ import java.util.concurrent.atomic.AtomicInteger;
  * Semaphores with no permits and no threads waiting on them are automatically removed from the map.
  *
  * @param <K> the type of the key
+ *
+ * @author Jeff Pasternack
  */
 public class SemaphoreMap<K> {
   private static class QualifiedSemaphore extends Semaphore {

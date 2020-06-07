@@ -7,6 +7,8 @@ package com.concurrentli;
 
 /**
  * Represents an {@link InterruptedException} that has been caught and rethrown as a runtime (unchecked) exception.
+ *
+ * @author Jeff Pasternack
  */
 public class UncheckedInterruptedException extends RuntimeException {
   /**

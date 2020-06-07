@@ -11,6 +11,8 @@ package com.concurrentli;
  *
  * ResettableEvent has two states: set and unset.  If "set" before any threads are waiting via "get", the next "get"
  * call immediately returns.  Otherwise, all threads currently waiting are activated when "set".
+ *
+ * @author Jeff Pasternack
  */
 public class ResettableEvent {
   private final Object _synchronizer = new Object();

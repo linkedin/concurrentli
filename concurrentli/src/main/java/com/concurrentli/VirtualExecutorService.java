@@ -23,6 +23,8 @@ import java.util.concurrent.TimeUnit;
  * terminate (and/or await termination) of groups of threads separately.  {@link VirtualExecutorService} can also
  * replace many "real" thread pool {@link ExecutorService}s that can then be backed by a single, shared thread pool,
  * saving resources.
+ *
+ * @author Jeff Pasternack
  */
 public class VirtualExecutorService extends AbstractExecutorService {
   private final Executor _executor;

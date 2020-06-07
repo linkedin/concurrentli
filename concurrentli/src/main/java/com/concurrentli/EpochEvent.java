@@ -13,6 +13,8 @@ package com.concurrentli;
  * Epochs are monotonically increasing; they never go down and start at 0 by default; this rule avoids
  * race conditions where two threads try to set different epochs, as the ultimate result will be the same as if only
  * the set(...) call with the higher epoch value was made.
+ *
+ * @author Jeff Pasternack
  */
 public interface EpochEvent {
   /**

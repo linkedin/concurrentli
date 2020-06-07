@@ -5,7 +5,6 @@
 
 package com.concurrentli;
 
-import com.concurrentli.ParallelProcessor;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

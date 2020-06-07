@@ -16,6 +16,8 @@ import java.util.concurrent.atomic.AtomicReferenceFieldUpdater;
  * synchronization-free.
  *
  * @param <T> the type of object being referenced.
+ *
+ * @author Jeff Pasternack
  */
 public class AtomicWriteOnceReference<T> implements Serializable {
   private transient T _cachedObj = null;

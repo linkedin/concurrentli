@@ -13,6 +13,8 @@ package com.concurrentli;
  *
  * Quickly acquiring a low-contention mutex or synchronized data structure would not be considering blocking (despite a
  * small chance of the thread being parked), but a potentially expensive read from an underlying stream would be.
+ *
+ * @author Jeff Pasternack
  */
 public enum BlockingStatus {
   /**

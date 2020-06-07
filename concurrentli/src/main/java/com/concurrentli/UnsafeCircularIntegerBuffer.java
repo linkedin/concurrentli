@@ -27,6 +27,8 @@ import java.util.concurrent.atomic.AtomicLongArray;
  *
  * Unlike a SequentialQueue, unsafe circular buffers offer random access to a particular horizon from the current
  * starting offset, never block, and require more care to use safely.
+ *
+ * @author Jeff Pasternack
  */
 public class UnsafeCircularIntegerBuffer implements Serializable {
   private static final long serialVersionUID = 20170901;

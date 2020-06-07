@@ -33,6 +33,8 @@ import java.util.function.Supplier;
  * Adapted from https://en.wikipedia.org/wiki/Double-checked_locking#Usage_in_Java
  *
  * @param <T> the type of object provided as a singleton.
+ *
+ * @author Jeff Pasternack
  */
 public abstract class Singleton<T> implements Supplier<T>, Serializable {
   private static final long serialVersionUID = 1;

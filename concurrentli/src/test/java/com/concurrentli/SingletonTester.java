@@ -5,7 +5,6 @@
 
 package com.concurrentli;
 
-import com.concurrentli.Singleton;
 import org.junit.Test;
 
 

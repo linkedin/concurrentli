@@ -22,6 +22,8 @@ import java.util.concurrent.locks.ReentrantLock;
  * {@link ImminentEpochEvent} is intended to be used when the epochs being awaited are in the near future, within a
  * known, fixed horizon, and fairly contiguous distribution (e.g. waiting for 3, 4, 5, 6, not 4, 19, 30).
  * {@link FutureEpochEvent} may be more efficient if you regularly await epochs farther in the future.
+ *
+ * @author Jeff Pasternack
  */
 public class ImminentEpochEvent implements EpochEvent {
   private final ReentrantLock[] _locks;

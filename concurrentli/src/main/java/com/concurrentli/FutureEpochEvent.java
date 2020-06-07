@@ -20,6 +20,8 @@ import java.util.PriorityQueue;
  * {@link FutureEpochEvent} is intended to be used when the epochs being awaited are sparse and far in the future.
  * If you typically wait for epochs that will occur in the near future, {@link ImminentEpochEvent} may be more
  * efficient.
+ *
+ * @author Jeff Pasternack
  */
 public class FutureEpochEvent implements EpochEvent {
   private final Object _synchronizer = new Object();

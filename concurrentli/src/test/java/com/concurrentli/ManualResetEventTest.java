@@ -5,8 +5,6 @@
 
 package com.concurrentli;
 
-import com.concurrentli.Interrupted;
-import com.concurrentli.ResettableEvent;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.junit.Test;
