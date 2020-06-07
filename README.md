@@ -36,6 +36,10 @@ running a particular method when tryRun() is called.
 (appropriate for the top-level method in a thread, which will thus terminate when the method returns) or re-throwing it
 as an unchecked UncheckedInterruptedException.
 
+## Managed Blockers
+Implementations of `ForkJoinPool.ManagedBlocker` for reading streams (`ManagedStreamReadBlocker`), acquiring locks
+(`ManagedLockBlocker`), dequeueing (`ManagedDequeueBlocker`), and combining multiple blockers (`ManagedMultiBlocker`).
+
 ## BSD 2-CLAUSE LICENSE
 Copyright 2017 LinkedIn Corporation
 All Rights Reserved.
