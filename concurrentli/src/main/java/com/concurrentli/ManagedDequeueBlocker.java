@@ -31,9 +31,9 @@ public class ManagedDequeueBlocker<T> implements ForkJoinPool.ManagedBlocker {
 
   /**
    * Creates a new blocker that will retrieve the next item from a blocking queue
-   * @param queue
+   * @param queue the queue from which the item will be retrieved
    */
-  ManagedDequeueBlocker(BlockingQueue<T> queue) {
+  public ManagedDequeueBlocker(BlockingQueue<T> queue) {
     _queue = queue;
   }
 
