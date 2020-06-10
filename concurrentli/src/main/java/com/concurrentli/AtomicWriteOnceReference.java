@@ -15,9 +15,8 @@ import java.util.concurrent.atomic.AtomicReferenceFieldUpdater;
  * The advantage over an AtomicReference or volatile is that, once the reference is set, reads become
  * synchronization-free.
  *
- * @param <T> the type of object being referenced.
- *
  * @author Jeff Pasternack
+ * @param <T> the type of object being referenced.
  */
 public class AtomicWriteOnceReference<T> implements Serializable {
   private transient T _cachedObj = null;

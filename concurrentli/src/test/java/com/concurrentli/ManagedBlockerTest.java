@@ -64,4 +64,29 @@ public class ManagedBlockerTest {
     // attempt to read past EOS
     Assert.assertEquals(60, ManagedStreamReadBlocker.read(bais, new byte[100], 100));
   }
+
+  @Test
+  public void testSequentialDequeueBlocker() throws InterruptedException {
+    SequentialQueue<String> queue = new SequentialQueue<>(5);
+    queue.enqueue(0, "A");
+    queue.enqueue(1, "B");
+    queue.enqueue(2, "C");
+
+    Assert.assertEquals("A", ManagedSequentialDequeueBlocker.dequeue(queue));
+
+    ManagedSequentialDequeueBlocker<String> blocker1 = new ManagedSequentialDequeueBlocker<>(queue);
+    Assert.assertTrue(blocker1.isReleasable());
+    Assert.assertTrue(blocker1.hasItem());
+    Assert.assertEquals("B", blocker1.getItem());
+
+    ManagedSequentialDequeueBlocker<String> blocker2 = new ManagedSequentialDequeueBlocker<>(queue);
+    Assert.assertTrue(blocker2.block());
+    Assert.assertTrue(blocker2.hasItem());
+    Assert.assertEquals("C", blocker2.getItem());
+
+    ManagedSequentialDequeueBlocker<String> blocker3 = new ManagedSequentialDequeueBlocker<>(queue);
+    Assert.assertFalse(blocker3.isReleasable());
+    Assert.assertFalse(blocker3.hasItem());
+    Assert.assertNull(blocker3.getItem());
+  }
 }

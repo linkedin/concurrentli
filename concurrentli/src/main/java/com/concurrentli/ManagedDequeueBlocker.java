@@ -7,9 +7,8 @@ import java.util.concurrent.ForkJoinPool;
 /**
  * Implements a {@link java.util.concurrent.ForkJoinPool.ManagedBlocker} for dequeuing items from a blocking queue.
  *
- * @param <T> the type of item to dequeue
- *
  * @author Jeff Pasternack
+ * @param <T> the type of item to dequeue
  */
 public class ManagedDequeueBlocker<T> implements ForkJoinPool.ManagedBlocker {
   private final BlockingQueue<T> _queue;
@@ -49,12 +48,11 @@ public class ManagedDequeueBlocker<T> implements ForkJoinPool.ManagedBlocker {
     if (_item == null) {
       _item = _queue.take();
     }
-    return true; // we have the buffer and the lock and don't need to block again
+    return true; // we don't need to block again
   }
 
   @Override
   public boolean isReleasable() {
-    // we require both a buffer (which must be acquired before the lock) and the lock
     return (_item != null || ((_item = _queue.poll()) != null));
   }
 }
